@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="O metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias">
+	<meta name="author" content="José da silva">
+	<meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+	
+	<title>metavops</title>
+
+
+	<!-- Bootstrap Core CSS -->
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link href="../css/clean-blog.min.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	 <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+<!-- facebook coments -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+<!-- end facebook coments -->
+
+<!-- Cookies  -->
+	<div class="box-cookies hide">
+		<p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+		<div class="btn-cookies"> Aceitar!</div>
+	</div>
+<!-- end cookies -->
+
+
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					Menu <i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="../index.html">metavops</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../about.html">Sobre</a>
+					</li>
+					<li>
+						<a href="../contact.html">Contato</a>
+					</li>
+					  <li>
+						<a href="../categoria.html">Categoria</a>
+					</li>
+				     <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->                                                                                                            
+	</nav>
+
+	<!-- Page Header -->
+	<!-- Set your background image for this header on the line below. -->
+	<header class="intro-header" style="background-image: url('https://i.ibb.co/FVmZC2z/ssh-backgroud.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="post-heading">
+						<h1>Como gerar chaves SSh no linux.</h1>
+						<h2 class="subheading">Tutorial usando o openSSH.</h2>
+						<span class="meta">Postado por <a href="#">metavops</a> 21 de maio de 2021.</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Post Content -->
+	<article>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<p>Nesse post irei te auxiliar a como gerar chaves ssh em qualquer distro linux a partir do openSSH. O openSSH é um software que geralmente vem instalado como padrão nas distros linux, abaixo vemos um pequeno resumo sobre a tecnologia retirado da web, caso queira saber mais sobre <a target="_blank" href="https://www.openssh.com/">clique aqui</a> e acesse o site oficial do openSSH.</p>
+
+<blockquote alt="https://pt.wikipedia.org/wiki/OpenSSH" >" 
+OpenSSH é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia em sessões de comunicações em uma rede de computadores usando o protocolo SSH. Foi criado com um código aberto alternativo ao código proprietário da suíte de softwares Secure Shell, oferecido pela SSH Communications Security. OpenSSH foi desenvolvido como parte do projeto OpenBSD, liderado por Theo de Raadt. " </blockquote>
+					<span class="caption text-muted">Trecho retirado do wikipedia.</span>
+
+					<h2 class="section-heading">Afinal pra quê serve o protocolo SSH ?</h2>
+
+
+					<p>Vamos simular o seguinte caso, imagina que você precisa acessar um servidor linux na qual hospeda seu site para uma manutenção de rotina, qual seria a melhor forma de acessa-lo remotamente e do forma segura ? Pois bem, ai que entra o protocolo SSH para realizarmos esse acesso de forma rapida e segura, o SSH pode ser utilizado com autenticação por chaves que garante o processo de conexão mais seguro, rapido e pratico, alem de prover melhor segurança por conta de tunel criptografado que é utilizado na conexão, deixando assim seu acesso remoto mais seguro.</p>
+
+					<img class="img-responsive" src="https://i.ibb.co/S3jm3Gv/Rd2d7aab49940fea1792d3b15477bd443.png" alt="metavops">
+
+					 
+					<h2 class="section-heading">Mãos a obra para gerarmos nossas chaves.</h2>
+
+					<p>Com o terminal linux aberto, verifique se o openssh esta instalado, caso não esteja <a target="_blank" href="https://www.openssh.com/">clique aqui</a> e acesse o site oficial do openSSH e realize a instalação do software.</p>
+									 
+					
+
+					<p>O open-ssh após instalado mantem uma pasta oculta chamada ".ssh" essa pasta geralmente fica no diretorio home do usuario por exemplo "/home/[usuario]/.ssh" a pasta por padrão tem a permissão de acesso "7 0 0" oque significa que apenas o usuario "root" pode acessar a pasta. No meu print abaixo eu já apliquei outra permissão para a pasta, caso não saiba como alterar as permissões de arquivos e pastas <a href="#">clique aqui.</a> e confira o artigo que escrevi sobre isso.</p>
+
+					<p>Para que consiga localizar a pasta e acessa-la, digite o comando "sudo su" e sua senha para se tornar um super usuario, e utilize o comando "ls -la" para visualizar a pasta ".ssh", no meu print adicionei um pipe("|") e apliquei o comando "grep" para filtrar entre o resultados exibidos pelo comando "ls -la".</p>
+ 
+					<img class="img-responsive" src="https://i.ibb.co/ZcpK3jG/C-pia-de-Captura-de-tela-de-2021-05-16-23-15-25.png" alt="metavops">
+					
+					 
+				 
+					<p>Acesse a pasta usando o comando "cd .ssh" para que possamos gerar as chaves ssh dentro da pasta.</p>
+					 <img class="img-responsive" src="https://i.ibb.co/3ykTjg6/C-pia-de-Captura-de-tela-de-2021-05-16-23-37-10.png" alt="metavops">
+
+
+					<p>Agora que estamos dentro da pasta, vamos aplicar o comando para gerarmos as chaves, use o comando "ssh-keygen" para gerar o par de chaves.</p>
+
+					<p>Após executar o comando "ssh-keygen" ele vai pedir o nome ou o caminho+nome onde salvará as chaves, eu nomeei como "minhaprimeirachavessh", porem você tambem pode trocar o diretorio onde vai salvar os arquivos da chave caso não esteje dentro da pasta ".ssh", ou caso queira trocar o local, digite dessa forma "/[local desejado]/minhaprimeirachavessh" para aterar o local onde ficará salvo os arquivos, mas por padrão eu decidi slavar na pasta ".ssh" .</p>
+					   
+					<p>Após isso, você pode inserir uma "plavara/frase passe" para proteção de sua chave ssh, caso queira utilizar esse recurso digite uma "plavara/frase passe" para proteção no campo "Enter passphrase" e "Enter same passphrase again", caso não queira configurar apenas tecle "enter" em seu teclado para ir pulando essas 2 opções. </p>
+
+					<img class="img-responsive" src="https://i.ibb.co/h7PFmTx/C-pia-de-Captura-de-tela-de-2021-05-16-23-41-27.png" alt="metavops">
+
+					<p>Com as chaves criadas vamos verificar os arquivos e testa-los, utilize o comando "ls -l" e verifique se as chaves estão salvas no diretorio.
+					Como podemos ver os dois arquivos estão no diretorio, um deles é a nossa chave publica(arquivo com a externsão ".pub") e o outro é a nossa chave privada.</p>
+					
+					 <img class="img-responsive" src="https://i.ibb.co/L0yBf78/C-pia-de-Captura-de-tela-de-2021-05-16-23-41-57.png" alt="metavops">
+
+					 <p>O arquivo com a externsão ".pub" como a propria extensão já diz é o arquivo de chave publica, esse arquivo deve ser mandado para o servidor/serviço, já o outro arquivo ele fica em sua maquina pois vai ser sua chave privada que você utilizará para acessar o servidor.</p>
+						
+					<p>Para um teste rapido eu fiz o upload do aquivo de chave publica em um dos meus servidores na oracle cloud.</p>
+
+					 <img class="img-responsive" src="https://i.ibb.co/PcFTvn1/C-pia-de-Captura-de-tela-de-2021-05-17-00-11-30.png" alt="metavops">
+					 <span class="caption text-muted">Nomeei a instancia com o nome "vm-01".</span>
+
+
+					 <img class="img-responsive" src="https://i.ibb.co/kx3bm7c/C-pia-de-Captura-de-tela-de-2021-05-16-23-55-31.png" alt="metavops">
+					 <span class="caption text-muted">Onde fiz o upload da chave publica para a instancia e apliquei as configurações na instancia.</span>
+
+
+					<p>Após isso use o seguinte sintaxe de comando para acessar o servidor desejado com a chave privada.</p>
+
+
+					<blockquote>ssh -i [arquivo] [usuario]@[ip do servidor]</blockquote>
+
+
+					<p>asssim como fiz abaixo.
+					Obs: coloquei o IP: 192.x.x.x para não expor meu IP publico.</p>
+
+				   <img class="img-responsive" src="https://i.ibb.co/vXFJwL7/conex-o-com-o-servidor.png" alt="metavops">
+
+
+					<p>Digite "yes" </p>
+
+					<img class="img-responsive" src="https://i.ibb.co/hRKpCFf/C-pia-de-Captura-de-tela-de-2021-05-17-00-14-33.png" alt="metavops">
+
+					<p>Parabéns você já estar dentro do servidor.</p>
+		 
+					<img class="img-responsive" src="https://i.ibb.co/hmsqyHP/primeiro-acesso-ao-servidor.png" alt="metavops">
+   
+
+				   <hr>
+
+					<h2 class="section-heading">Dica do juninho.</h2>
+
+					<p>Geralmente quando eu tenho que acessar o mesmo servidor diversas vezes, eu gero um shell script onde armazeno o caminho e o nome da chave privada e o numero IP do servidor, ficando assim mais facil a conexão com o servidor.</p>
+
+					<p>Navegue até um diretorio de sua preferencia e utilize o comando "touch" com para criar um arquivo com a extensão ".sh", no meu caso eu criei um arquivo com o mesmo nome do meu servidor vm-01.</p>
+
+					<img class="img-responsive" src="https://i.ibb.co/w0JM67G/C-pia-de-Captura-de-tela-de-2021-05-17-00-41-10.png" alt="metavops">
+
+					<p>Após gerar o arquivo, use o comando "chmod" para dar permissão de execução ao arquivo</p>
+					<p>comando: "chmod +x vm-01.sh"</p>
+					
+					<img class="img-responsive" src="https://i.ibb.co/3z926JF/C-pia-de-Captura-de-tela-de-2021-05-17-00-41-39.png" alt="metavops">
+
+					<p>Depois acesse o arquivo usando um editor de texto de sua preferencia, eu por exemplo estou utilizando o VI.</p>
+					<p>Abra o arquivo com o comando: vi vm-01.sh</p>
+					<p>Tecle "I" em seu teclado, para poder inserir texto no arquivo.</p>
+					<p>Na primeira linha dentro do arquivo, adicione o comentario: #!/bin/bash</p> 
+					<p>Logo após isso insira o comando que utilizamos acima para nos conectarmos ao servidor.</p>
+					<p>Para salvar o arquivo, tecle ESC no teclado, depois insira ":wq" e tecle enter para salvar e sair.</p>
+					  
+					<img class="img-responsive" src="https://i.ibb.co/FDqcH8m/C-pia-de-Captura-de-tela-de-2021-05-17-00-43-39.png" alt="metavops" >
+
+
+
+					<p>Após salvarmos o arquivo utilizaremos ele para se conectar ao servidor, esse script que criamos é para automatizar para não precisar ficar decorando o caminho, nome, e IP do servidor na qual queira conectar.</p>
+
+					<p>Para executar o arquivo sell script utilizaremos o comando "./" antes do arquivo, nesse caso ficaria: ./vm-01.sh</p>
+
+					<img class="img-responsive" src="https://i.ibb.co/D4JYBqB/C-pia-de-Captura-de-tela-de-2021-05-17-00-44-36.png" alt="metavops">
+
+					<p>Pronto já estamos dentro do servidor, bastou apenas um comando simples que foi chamar nosso script em shell.</p>
+
+					<hr>
+				 
+				</div>
+			</div>
+		</div>
+	</article>
+   
+	<div align="center">
+        <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+        <br>
+    <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/como-gerar-chaves-ssh-no-linux.html" data-width="" data-numposts="5"></div>
+     </div>
+
+	<!-- Footer -->
+  <footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<ul class="list-inline text-center">
+						<li>
+							<a href="https://www.linkedin.com/in/jose-junior-silva/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://github.com/Jose-cyber">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						   <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+					</ul>
+					<p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+   
+
+	<!-- jQuery -->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script src="../js/jqBootstrapValidation.js"></script>
+	<script src="../js/contact_me.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

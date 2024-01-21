@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nesse artigo explico o basico sobre como funciona o IPTABLES, uma potente ferramenta de firewall que vem instalada nativamente nas distros GNU/LINUX, o metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias">
+    <meta name="author" content="José da silva">
+    <meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+    <title>metavops</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+
+
+<body>
+
+    <!-- Cookies  -->
+        <div class="box-cookies hide">
+            <p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+            <div class="btn-cookies"> Aceitar!</div>
+        </div>
+    <!-- end cookies -->
+    <!--facebook-coments -->
+    <div id="fb-root"></div>
+       <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="U7q6QCQl"></script>
+    <!-- end facebook-coments -->
+    
+    
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="../index.html">metavops</a>
+                </div>
+    
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="../about.html">Sobre</a>
+                        </li>
+                        <li>
+                            <a href="../contact.html">Contato</a>
+                        </li>
+                          <li>
+                            <a href="../categoria.html">Categoria</a>
+                        </li>
+                        <li>
+                            <a href="../privacidade.html">Privacidade</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+    
+        <!-- Page Header -->
+        <!-- Set your background image for this header on the line below. -->
+        <header class="intro-header" style="background-image: url('../img/artigos/seguranca/como-montei-um-potente-firewall/firewall-bg.jpg')" alt="https://pixabay.com/pt/photos/tecnologia-da-informa%C3%A7%C3%A3o-3923009/" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="post-heading">
+                            <h1>Como utilizar o iptables.</h1>
+                            <h2 class="subheading">Saiba como liberar e bloquear portas no iptables.</h2>
+                              <span class="meta">Postado por <a href="#">metavops</a> 18 de novembro de 2021.</span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <h2 class="section-heading"> O que é o iptables ?</h2>
+                    <p>O iptales é um serviço de firewall que vem instalado por padrão em diversas distros GNU/linux, uma de suas principais caracteristicas é facilidade e robustez fora a quantidade de recursos que ele oferece para um serviço que já vem instalado nativamente.
+                    </p>
+                    O iptables foi lançado em 1998 e foi escrito sobre a linguagem C, seu criador foi o Paul Rusty Russell, no inicio o projeto se chamava <strong>Netfilter/iptables</strong> já que o principal objetivo do iptables é provisinar uma interface que atuava sobre o Netfilter na qual atua diretamente no gerenciamento de pacotes.
+                    </p>
+                    <p>Para entendermos como funciona o Netfilter/iptables precisamos saber o que são "chains", "tables", "target" e etc, e é isso que vamos abordar no proximo parágrafo. </p>
+                    <h2 class="section-heading"> O são tables, chains e target ?</h2>
+                    <!-- tables -->
+                    <p>
+                    <strong>TABLES:</strong> podemos chamar de table ou tabela, no iptables temos 3 table's que são:<br> 
+                    <strong>FILTER</strong><br>
+                    <strong>NAT</strong><br>
+                    <strong>MANGLE</strong><br>
+                    </p>
+                    Cada uma das tabelas acima oferece recursos e funções diferentes, mas vale resaltar que a tabela que vem ativada por padrão no iptables é a tabela "FILTER", porem vamos verificar o que cada tabela dessa nos oferece como recurso:<br>
+                    <P>
+                    <strong>FILTER: </strong> Tabela que vem ativada por padrão, ideal para host's e tem 3 chains que são elas: <strong>INPUT</strong>,<strong> OUTPUT</strong>, e <strong>FORWARD</strong>.<br>
+                    <br>
+                    <strong>NAT:</strong> a tabela NAT(Network address translation) como o proprio nome diz ajuda na tradução de endereços IP, por exemplo podemos utilizar o NAT para conectar redes com diferentes ranges/pools de IP's, vamos supor que você recebe o seguinte endereço IP de seu provedor <strong>123.456.789.101</strong> ao ativar e configurar um NAT, você pode fazer com que sua rade local com o range <strong>192.168.0.10</strong> se comunique com a internet, e isso ocorre devido ao NAT.<br>
+                    A tabela NAT tem 3 chains que são elas: <strong>PREROUTING</strong>, <strong>POSTROUTING</strong>, e <strong>OUTPUT</strong>.
+                    <br>
+                    <br>
+                    <strong>MANGLE:</strong> a tabela mangle trata-se de uma tabela na qual pode ser utilizada para aplicar funções especificas/especiais no roteamento, pois sua ações são realizadas antes do pacote entrar em uma das 5 chain's na qual ele atua, que são:<br>
+                    <strong>PREROUTINT</strong>(NAT),
+                    <strong>POSTROUTING</strong>(NAT),
+                    <strong>INPUT</strong>(INPUT),
+                    <strong>OUTPUT</strong>(NAT),
+                    <strong>FORWARD</strong>(INPUT).
+                    </p>
+                    </p>
+                    <!-- chain-->
+                    <p>
+                    <strong>CHAINS: </strong> As chains são locais onde as regras do firewall serão aplicadas e cada chain tem um funcionamento diferente, no exemplo abaixo eu listo o que cada chain fica responsavel:
+                    </p>
+
+                    <ul id="myUL">
+                        <li><strong>FILTER</strong></span> </li>
+                            <ul class="nested">
+                                        <ul class="nested">
+                                            <li><strong>INPUT</strong>: filta os pacotes na entrada do sistema.</li>
+                                            <li><strong>OUTPUT</strong>: filta os pacotes na saida.</li>
+                                            <li><strong>FORWARD</strong>: filtra os pacotes durante o roteamento.</li>
+                                        </ul>
+                            </ul>
+                    </ul>
+
+
+                    <ul id="myUL">
+                        <li><strong>NAT</strong></span> </li>
+                            <ul class="nested">
+                                        <ul class="nested">
+                                            <li><strong>PREROUTING</strong>: filta os pacotes na entram no sistemas.</li>
+                                            <li><strong>POSTROUTING</strong>: filta os pacotes durante o roteamento e aplica o destino para os pacotes.</li>
+                                            <li><strong>OUTPUT</strong>: filtra os pacotes de saida..</li>
+                                        </ul>
+                            </ul>
+                    </ul>
+                    <!-- target -->
+                    <p>
+                    <strong>TARGET:</strong> O target são ações que aplicamos nas regras que ficam dentro das chains, para listar todos os target's ativos no sistema, execute o comando:<br>
+                    <strong>cat /proc/net/ip_tables_targets</strong><br>
+                    no exemplo abaixo vou listar alguns target's e a função na qual ele desempenha na regra:
+                    </p>
+
+
+                        <ul id="myUL">
+                            <li><strong>FILTER</strong></span> </li>
+                                <ul class="nested">
+
+                                    <li>CHAINS(INPUT, OUTPUT e FORWARD)</li>
+
+                                        <ul class="nested"><strong>TARGET's:</strong>
+                                            <ul class="nested">
+                                                <li><strong>ACCEPT</strong>: Aceita o pacote.</li>
+                                                <li><strong>REJECT</strong>: Rejeita o pacote.</li>
+                                                <li><strong>DROP</strong>: Descarta um pacote sem notificar o emissor.</li>
+                                                <li><strong>LOG</strong>: Gera um log do chamado.</li>
+                                            </ul>
+                                
+                                        </ul>
+                            
+                                </ul>
+                        </ul>
+                    <br>
+                        <ul id="myUL">
+                            <li><strong>NAT</strong></span></li>
+                                <ul class="nested">
+
+                                    <li>CHAINS(PREROUTING, POSTROUTING e OUTPUT)</li>
+
+                                        <ul class="nested"><strong>TARGET's:</strong>
+                                            <ul class="nested">
+                                                <li><strong>SNAT</strong>: Realiza a troca de endereços IP de origem.</li>
+                                                <li><strong>DNAT</strong>: Altera os endereços IP de destino.</li>
+                                                <li><strong>MASCAREDE</strong>: Faz o mascaramento do IP.</li>
+                                                <li><strong>REDIRECT</strong>: Redireciona o pacote para uma porta local.</li>
+                                            </ul>
+                                
+                                        </ul>
+                            
+                                </ul>
+                        </ul>
+                    <br>
+                                    
+                    <h2 class="section-heading">Modulos.</h2>
+                    <p>
+                    Os modulos são extensões que podemos utilizar nas regras, para expandirmos os recursos e ações do firewall, os modulos são especificados na regra pela opção <strong>-m</strong> ou <strong>--match</strong>. Para que você verifique os modulos ativos em seu IPtables, basta executar o comando:<br>
+                    <strong>cat /proc/net/ip_tables_matches</strong><br>
+                    Alguns exemplos de modulos mais utilizados no iptables são: MULTIPORT, IPRANGE, CONNLIMIT, STRING, TIME, STATE.</p><br>
+                    <ul id="myUL">
+                        <li><strong>Modulos</strong></span> </li>
+                                <ul class="nested">
+                                    <ul class="nested"><strong>-m</strong> ou <strong>--match</strong>
+                                        <ul class="nested">
+                                            <li><strong>MULTIPORT</strong>: permite criar regras especificando mais de uma porta.</li>
+                                            <li><strong>IPRANGE</strong>: permite criar regras especificando ranges de IP.</li>
+                                            <li><strong>CONNLIMIT</strong>: permite criar regras para controle de conexão simultaneas.</li>
+                                            <li><strong>STRING</strong>: permite criar regras na qual analisa uma determinada string dentro do pacote para que possa ser bloqueado, liberado ou analisado.</li>
+                                            <li><strong>TIME</strong>: permite criar regras na qual podemos adicionar por tempo(segundos, minutos, horas e dias).</li>
+                                            <li><strong>STATE</strong>: permite criar regras na qual faz analise do estado da conexão.</li>
+
+                                        </ul>
+                                   </ul>
+                                </ul>
+                    </ul>                  
+
+                    <!-- comandos basicos -->
+                    <h2 class="section-heading">Comandos basicos.</h2>
+                        <p>
+                        Antes de executarmos os comandos basicos precisamos estar logado com uma conta com direitos administrativos, para isso você precisa digitar os comandos a seguir com o comando <strong>sudo</strong> antes, seguindo essa sintaxe aqui:<br>
+                        <strong>sudo [comando desejado]</strong><br>
+                        Caso não vocẽ não queira ficar digitando o comando <strong>sudo</strong> toda vez, basta você executar o comando <strong>sudo su</strong> coloque sua senha e após isso você poderá executar os comandos pois estará logado como root no sistema. 
+                        </p>
+                   
+                   
+                    <p>
+                        <h4 class="section-sub">Comando help.</h4>
+                        Caso precise tirar duvida sobre sintaxe, agumentos ou opções disponiveis execute o seguinte comando:<br>
+                        <strong>iptables --help</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/Gx7bptF/Captura-de-tela-de-2021-09-03-02-43-15.png" alt="juninho-tecnologia" > 
+                    </p>
+
+                    <p>
+                        <h4 class="section-sub">Salvando e restarurando as regras.</h4>
+                        Quando definimos uma regra através da linha de comando, geralmente ela é perdida quando efetuamos a reinicialização do sistema, para realizar o backup das regras de firewall execute o comando abaixo:<br>
+                        <strong>iptables-save > /etc/iptables-save</strong><br>
+                        esse comando direciona as regras existentes no firewall para um arquivo de texto.
+                        <img class="img-responsive" src="https://i.ibb.co/KhWrMGm/Captura-de-tela-de-2021-10-22-04-04-29.png" alt="juninho-tecnologia" >
+                        Para recuperar as regras, utilize o arquivo de texto gerado pelo comando anterior, e utilize o comando:<br>
+                        <strong>iptables-save < /etc/iptables-save</strong><br>
+                        <img class="img-responsive" src="https://i.ibb.co/7KfcCQW/Captura-de-tela-de-2021-10-22-04-09-49.png" alt="juninho-tecnologia" > 
+             
+                    </p>
+             
+                    <p>
+                        <h4 class="section-sub">Listar regras.</h4>
+                        Para listarmos todas as regras em uso do firewall utilizamos o argumento <strong>-L</strong> .<br>
+                        <strong>iptables -L</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/x3127W6/Captura-de-tela-de-2021-09-03-03-09-15.png" alt="juninho-tecnologia" >
+                        Podemos utilizar o argumento <strong>-L</strong> passando a chain na qual queremos listar as regras, para isso utilizamos a seguinte sintaxe: <strong>iptables -L [CHAIN]</strong> neste exemplo abaixo eu estou listando as regras da chain INPUT.<br>
+                        <strong>iptables -L INPUT</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/Tr8k4FK/Captura-de-tela-de-2021-09-03-03-16-05.png" alt="juninho-tecnologia">   
+                    </p>             
+            
+                     <!-- liberando portas -->
+                    <h2 class="section-heading">Liberando e bloqueando portas no iptables.</h2>
+                        <p>
+                        Bloqueando o protocolo PING no firewall, para isso vou criar uma regra para a chain INPUT bloqueado o protocolo ICMP, para isso digite o comando abaixo:<br>
+                        <strong>iptables -A INPUT -p icmp -j DROP </strong>
+                        <img class="img-responsive" src="https://i.ibb.co/tqN0gfC/Captura-de-tela-de-2021-09-03-03-27-45.png" alt="juninho-tecnologia" >
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-A</strong>: Cria nova regra no final da chain.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>icmp</strong>: Protocolo.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>DROP</strong>: Ação escolhida para a regra.<br>
+                        </p>
+                        
+                        <p>
+                        Bloqueando e gerando log do pacote para que seja analisado posteriormente, para isso digite o comando:<br>
+                        <strong>iptables -I INPUT -p icmp -j LOG</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/WgnVqR8/Captura-de-tela-de-2021-10-30-20-19-19.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-I</strong>: Cria nova regra no topo da chain.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>icmp</strong>: Protocolo.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>LOG</strong>: Ação escolhida para a regra.<br>
+                        </p>
+
+                        <p>
+                        Liberando uma porta especifica no firewall, no exemplo abaixo vou abrir a porta 80.<br>
+                        <strong>iptables -I INPUT -p tcp --dport 80 -j ACCEPT</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/DQgwRks/Captura-de-tela-de-2021-10-30-20-36-01.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-I</strong>: Cria nova regra no topo da chain.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>tcp</strong>: Protocolo.<br> 
+                        <strong>--dport</strong>: indica que a regra vai ser ativa em uma porta epecifica.<br> 
+                        <strong>80</strong>: porta escolhida.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>ACCEPT</strong>: Ação escolhida para a regra.<br>
+                        </p>
+
+                        <p>
+                        Deletando uma regra especifica no firewall, no exemplo abaixo vou deletar a regra que foi criada acima para abrir a porta 80, para isso digite o comando abaixo:<br>
+                        <strong>iptables -D INPUT -p tcp --dport 80 -j ACCEPT</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/xs7J199/Captura-de-tela-de-2021-10-30-20-51-54.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-D</strong>: Deleta regra na chain escolhida.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>tcp</strong>: Protocolo.<br> 
+                        <strong>--dport</strong>: Indica que a regra vai ser ativa em uma porta epecifica.<br> 
+                        <strong>80</strong>: porta escolhida.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>ACCEPT</strong>: Ação escolhida para a regra.<br>
+                        </p>
+
+                        <p>
+                        Criando uma regra de redirecionamento de portas utilizando a tabela NAT, nessa regra vou direcionar o trafego da porta 8080 para a 80, para isso digite o comando abaixo:<br>
+                        <strong>iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to :80</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/xs7J199/Captura-de-tela-de-2021-10-30-20-51-54.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-t</strong>: Indica a tabela.<br>
+                        <strong>nat</strong>: tabela escolhida(NAT).<br>
+                        <strong>-A</strong>: Cria uma regra na chain escolhida.<br>
+                        <strong>PREROUTING</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>tcp</strong>: Protocolo.<br> 
+                        <strong>--dport</strong>: Indica que a regra vai ser ativa em uma porta epecifica.<br> 
+                        <strong>8080</strong>: porta escolhida.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>DNAT</strong>: Ação escolhida para a regra, para redirecionar o trafego.<br>
+                        <strong>--to :80</strong>: Indica a porta de destino na qual vai receber o trafeg.<br> 
+                        </p>
+                    
+                    <h2 class="section-heading">Inserindo modulos nas regras.</h2>
+                        
+                        <p>
+                        Utilizando o modulo <strong>MULTIPORT</strong> nos permite especificarmos mais de uma porta na regra agir.<br>
+                        <strong>iptables -I INPUT -m multiport -p tcp --dports 80,443 -j ACCEPT</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/xH95z3J/Captura-de-tela-de-2021-10-30-21-01-38.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-I</strong>: Cria nova regra no topo da chain.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-m</strong>: Indica que será utilizado um modulo.<br>
+                        <strong>multiport</strong>: Modulo escolhido.<br>
+                        <strong>-p</strong>: Especifica o protocolo na qual a regra vai ser aplicada.<br>
+                        <strong>tcp</strong>: Protocolo.<br> 
+                        <strong>--dports</strong>: indica as portas na qual a regra vai agir.<br> 
+                        <strong>80,443</strong>: portas escolhidas.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>ACCEPT</strong>: Ação escolhida para a regra.<br>
+                        </p>
+                        
+                        <p>
+                        Utilizando o modulo <strong>IPRANGE</strong> nos permite especificarmos um range de ip, isso pode ser bastante necessario quando precisamos determinar que somentes IP's dentro desse range acessem o sistema/recuso.<br>
+                        <strong>iptables -I INPUT -m iprange --src-range 192.168.10.2-192.168.10.50 -j ACCEPT</strong>
+                        <img class="img-responsive" src="https://i.ibb.co/5hb5Sfs/Captura-de-tela-de-2021-10-30-21-28-07.png" alt="juninho-tecnologia"><br>
+                        Segue abaixo a descrição de cada componente do comando que digitei acima:<br>
+                        <strong>iptables</strong>: Executor do comando.<br> 
+                        <strong>-I</strong>: Cria nova regra no topo da chain.<br>
+                        <strong>INPUT</strong>: Chain escolhida na qual a regra vai agir.<br>
+                        <strong>-m</strong>: Indica que será utilizado um modulo.<br>
+                        <strong>iprange</strong>: Modulo escolhido.<br>
+                        <strong>--src-range</strong>: Especifica o range de origem/entrada.<br>
+                        <strong>192.168.10.2 - 192.168.10.50</strong>: Range de IP's escolhidos.<br> 
+                        <strong>-j</strong>:  Executa uma ação.<br>
+                        <strong>ACCEPT</strong>: Ação escolhida para a regra.<br>
+                        </p>
+                    
+                    <h2 class="section-heading">Conclusão.</h2>
+                        <p>
+                        O iptables é ferramenta bem potente e com diversos recursos, você tambem pode integra-lo com outras tecnologias para aumentar proteção de sua maquina ou servidor. Neste artigo eu fiz uma explicação basica de como é, e como funciona esse firewall, caso tenha duvidas ou sugestões, deixe um comentario abaixo, ou acesse guia <a href="../contact.html" target="_blank">Contato</a>.
+                        </p>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+  
+    <div align="center">
+        <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+           <br>
+               <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/firewall-linux-oque-sao-chains-e-tables.html" data-width="" data-numposts="5"></div>
+    </div>
+
+  <!-- Footer -->
+ <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.linkedin.com/in/jose-junior-silva/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Jose-cyber">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                           <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   
+
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

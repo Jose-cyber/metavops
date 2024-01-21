@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+     
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="O metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias">
+    <meta name="author" content="José da silva">
+    <meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+    <title>metavops</title>
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+<!-- Cookies  -->
+    <div class="box-cookies hide">
+        <p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+        <div class="btn-cookies"> Aceitar!</div>
+    </div>
+<!-- end cookies -->
+
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="../index.html">metavops</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="../contact.html">Contato</a>
+                    </li>
+                      <li>
+                        <a href="../categoria.html">Categoria</a>
+                    </li>
+                    <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('https://i.ibb.co/FVmZC2z/ssh-backgroud.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Como gerar chaves ssh no windows.</h1>
+                        <h2 class="subheading">Tutorial usando o cmd e o putty.</h2>
+                       <span class="meta">Postado por <a href="#">metavops</a> 08 de abril de 2021</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Nesse post irei te auxilixar a como gerar chaves ssh no windows usando o putty e o openssh, caso não saiba como habilitar o openssh no windows 10 <a href="desenvolver.html">clique aqui</a> para ser redirecionado para o procedimento sobre como habilita-lo.</p>
+                    
+                    <p>Nesse procedimento abaixo ensino a como gerar as chaves, porem não ensino como enviar a chave publica para o servidor e nem como configurar o serviço para utilizar a autenticação por chaves, pretendo adicionar essas informações em outro tutorial.</p>      
+
+                   <h2 class="section-heading">Gerando os arquivos de chaves SSH usando putty.</h2>
+
+                    <p>O putty é um software que por meio dele podemos realizar o acesso SSH, caso queira saber mais sobre <a href="https://www.putty.org/" target="_blank">clique aqui</a> parar acessar o site do putty e tambem para realizar o download do programa.</p>
+
+                    <a href="#">
+                        <img class="img-responsive" src="../img/artigos/ssh-windows/putty.interface.PNG" alt="juninho-tecnologia">
+                    </a>
+                    
+                    <span class="caption text-muted">interface do putty após instalado, mas fique tranquilo que não vamos usa-lo agora.</span>
+
+                    <p>Não vamos usar o putty agora, pois quando instalamos o putty ele instala um outro programa que utilizaremos para gerar as chaves, o puttygen, você pode localiza-lo por meio do menu iniciar do windows, como na imagem abaixo.</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/puttygen.PNG" alt="juninho-tecnologia">
+
+                    <p>Na imagen abaixo vemos a interface do programa puttygen, clique em generate.</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/puttygen-gerando-chave.PNG" alt="juninho-tecnologia">
+
+
+                    <p>Após isso clique no botão "save public keys" e salve a chave, pois essa é chave publica que vai para o servidor/serviço, após isso clique em  "Save private key", ao clicar o programa perguntara se deseja criar uma "palavra/frase passe" para proteção da chave, caso queira clique em não e insira a palavra/frase passe nos campos "key passphrase" e "confirm passphrase", e salve a chave em sua maquina, caso não queire configurar uma "palavra/frase passe" clique em sim na mensagem, e salve a cheve na maquina, pois essa chave com extensão ".ppk" é o arquivo de chave privada que utilizaremos mais tarde para nos conectarmos ao servidor</p>
+                      
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/puttygen-salvando-ppk.PNG" alt="juninho-tecnologia">
+
+
+                    <p>Pronto já geramos o par de chaves ssh, agora vamos usar o putty para conectar ao servidor.</p>
+
+                    <p>Abra o putty clique no campo "category" clique em "SSH" > "auth" > "browse" e insira procure pela chave privada, aquela que salvamos com a extensão ".ppk".</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/chave-privada-ssh.PNG" alt="juninho-tecnologia">
+
+                    
+                    <p>Após importar a chave, no campo "category" clique em "session" e adicione o IP do servidor no campo "Host name(or ip address)", utilizaremos a porta padrão que é a 22, e no campo "saved session" coloque um nome para essa sessão e clique em "save" caso deseja salvar essas configurações, após isso só clicar em "open" e após isso terá que abrir um terminal.</p>
+
+                   <img class="img-responsive" src="../img/artigos/ssh-windows/conectando-ao-servidor.PNG" alt="juninho-tecnologia">
+
+                   <p>Após clicar em "open" o terminal do acesso remoto vai te pedir o nome de usuario na qual você deseja se conectar, digite o nome de usuario, após isso ele vai pedir algumas informações, confirme digitando "yes" e a partir dai você estara conectado ao servidor, como vemos na imagem abaixo.</p>
+                 
+                   <img class="img-responsive" src="../img/artigos/ssh-windows/terminal ssh.PNG" alt="juninho-tecnologia">
+                
+                   <p>Obs: nunca logue usando o usuario root, sempre acesse usando um usario comum do servidor/serviço e caso seja necessario use o comando "sudo" para elevar seus priviligios.</p>
+
+
+             <!-- segunda parte  -->
+             <hr>
+                    <h2 class="section-heading">Gerando os arquivos de chave SSH por meio do CMD</h2>
+
+                    <p>Abra o CMD e crie uma pasta chamada .ssh para armazenar as chaves, para isso use o comando "md .ssh".</p>
+                    
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/md.ssh.PNG" alt="juninho-tecnologia">
+
+                    <p>Acesse a pasta com o comando "cd .ssh" para podermos gerar a chaves.</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/cd.ssh.PNG" alt="juninho-tecnologia">
+
+                    <p>Após acessar a pasta, vamos executar o comando "ssh-keygen" para gerarmos as chaves.</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/ssh-keygen.PNG" alt="juninho-tecnologia">
+
+                    <p>Após executar o comando "ssh-keygen" ele vai pedir o caminho e nome onde salvará as chaves, eu nomeei como "primeira-chave-ssh", porem você tambem pode trocar o diretorio onde vai salvar a chave caso não esteje dentro da pasta .ssh, ou caso queira trocar o local onde você vai salvar os arquivos, digite dessa forma "C:\users\[seu-usuario]\primeira-chave-ssh". para aterar o local onde ficará salvo os arquivos, mas por padrão eu decidi slavar na pasta .ssh.</p>
+
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/primeirachavessh.PNG" alt="juninho-tecnologia">
+                     
+                    <p>Após isso, se quiser apenas teclar "enter" para ir pulando até gerar as cahaves, ou se quiser você pode inserir uma "plavara/frase passe" para proteção de sua chave ssh, caso queira digite no campo "Enter passphrase" e "Enter same passphrase again" após isso será gerados 2 arquivos, um deles com a extensão ".pub".</p>
+                    
+                    <img class="img-responsive" src="../img/artigos/ssh-windows/chavesshcriada.PNG" alt="juninho-tecnologia">
+
+                    <p>O arquivo com a extensão ".pub" como a propria extensão já diz é o arquivo de chave publica, esse arquivo deve ser mandado para o servidor/serviço, já o outro arquivo ele fica em sua maquina pois vai ser sua chave privada que você utilizará para acessar o servidor.</p>
+                    <p>após isso use o seguinte sintaxe de comando para acessar o servidor desejado com a chave.</p>
+
+                    <blockquote>ssh -i [arquivo] [usuario]@[ip do servidor]</blockquote>
+
+                    <p>exemplo: ssh -i primeira-chave-ssh joaozinho@192.1.1.1</p>
+ 
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </article>
+         
+            <div align="center">
+               <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+                  <br>
+                     <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/como-gerar-chaves-ssh-no-windows.html" data-width="" data-numposts="5"></div>
+            </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.linkedin.com/in/jose-junior-silva/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Jose-cyber">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                           <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

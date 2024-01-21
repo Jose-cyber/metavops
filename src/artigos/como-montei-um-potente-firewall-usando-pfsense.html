@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+     
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="O metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias.">
+    <meta name="author" content="José da silva">
+    <meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+    <title>metavops</title>
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+
+
+<!-- Cookies  -->
+    <div class="box-cookies hide">
+        <p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+        <div class="btn-cookies"> Aceitar!</div>
+    </div>
+<!-- end cookies -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="../index.html">metavops</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="../contact.html">Contato</a>
+                    </li>
+                      <li>
+                        <a href="../categoria.html">Categoria</a>
+                    </li>
+                    <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+        <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../img/artigos/seguranca/como-montei-um-potente-firewall/firewall-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Como montei um potente firewall usando o pfSense.</h1>
+                        <h2 class="subheading">firewall para controle e gerenciamento de minha rede local.</h2>
+                       <span class="meta">Postado por <a href="#">metavops</a> 15 de abril de 2021</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Nesse post irei te mostrar como montei um potente firewall para controle, gerenciamento e segurança de minha rede local usando o pfSense.</p>
+                    
+                    <p>Caso queira saber mais sobre a tecnologia que estou usando <a target="_blank" href="https://www.pfsense.org/">clique aqui</a> para acessar o site e tirar sua duvidas sobre.</p>      
+
+                    <h2 class="section-heading">Por que eu escolhi o pfSense ?</h2>
+
+                    <p>Pessoalmente estava bastante pensativo entre 3 soluções firewall, que eram o pfSense, OPNsense, e o mikrotik. Porem como o mikrotik é uma solução que necessita de licença para utilização do RouterOS, que é o software da mikrotik usado para roteamento, ou precisaria adquirir uma RB da marca para utlizar esse serviço, isso fez com que eu mudasse de ideia e ficasse entre o pfSense e o OPNsense, que apesar dos nomes e funcionalidades bem parecidas, são excelentes serviços onde cada um tem suas particularidades, por fim acabei decidindo testar o pfSense primeiro. Caso queira conhecer mais sobre as tecnologias que citei nesse paragrafo, clique nos links abaixo.<br><a target="_blank" href="https://www.pfsense.org/">pfSense</a><br><a target="_blank" href="https://opnsense.org/">OPNsense</a><br> <a target="_blank" href="https://mikrotik.com/">Mikrotik</a></p>
+           
+
+                    <h2 class="section-heading">Hardware utilizado.</h2>
+                    
+
+                    <p>Como o pfSense tem exigencias minimas muito baixas, é possivel extrair muito desempenho com muito pouco recurso de hardware, abaixo vemos um print do site da pfSense com os requisitos minimos e o recomendado para utilização do serviço.</p>
+
+                    <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/pfSense-requiriments.PNG" alt="print retirado do site da pfSense">
+
+                    <p>O hardware que utilizei para esse servidor, foi uma placa mãe ASUS MINI-ITX C8HM70-I com CPU DUAL CORE CELERON 847 de 1.1GHZ. A placa era de um amigo proximo que estava prestes a jogar a placa no lixo, pois não há utilizava mais.</p>
+
+                    <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/placa-mae-limpeza.jpg" alt="metavops">
+                    <p>Como eu já tinha a memoria ram, a placa de rede, e o HD, eu iria precisar apenas comprar um gabinete e uma fonte atx, para ligar a placa e botar o projeto para funcionar, então bora comprar o hardware restante.</p>
+
+                    <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/bora-comprar-hardware.jpg" alt="metavops">
+
+       
+                   <h2 class="section-heading">Como era a rede antes do firewall.</h2>
+
+                   <p>Antes minha rede local era apenas uma ONU onde eu recebia meu link de fibra optica, e um roteador fraquinho que distribuía o wifi para a casa e computadores, quem fornecia DHCP para a rede era apenas a ONU que é conectada diretamente ao provedor, ou seja não havia nada para proteção de minha rede local, não tinha como definir regras de segurança, controle de trafego e alterar configurações básicas de roteamento e etc.</p>
+                      
+                    <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/rede-antes.jpg" alt="metavops">
+                   
+                    <h2 class="section-heading">Instalação do pfSense.</h2>
+
+                    <p>Para instalação utilizei um pen drive com a imagem do sistema, que realizei o <a target="_blank" href="https://www.pfsense.org/download/">download</a> no proprio site da pfSense e a instalação é bem rapida e simples, porem durante a instalação é necessario configurações basicas das interfaces de rede, DNS, DHCP e entre outras configurações de rede.</p>
+
+
+                    <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/instalacao-do-pfsense.jpg" alt="metavops">
+
+                    
+                    <h2 class="selection-heading">Testando tudo.</h2>
+
+                    <p>Testando tudo fora do gabinete, antes de montar, para testes em relação ao desempenho e para mutenções basicas caso ocorra algum erro.</p>
+
+                   <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/testando-o-firewall.jpg" alt="metavops">
+                   
+                   <h2 class="selection-heading">Acessando a interface web.</h2>
+                    
+                   <p>Após testarmos o hardware, instalarmos a imagem do pfSense, e realizado as configurações basicas das interfaces de rede. Use um computador conetado na saida LAN do nosso firewall, acesse a interface web do firewall por meio do IP da interface LAN, para realizarmos as demais configuração por meio da interface web. Após aplicar suas configurações, você pode estar montando uma dashboard para visualização do desempenho de seu firewall e serviços que podem ser incluidos no firewall, como vemos na imagem abaixo.</p>
+
+                   <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/dashboard.png" alt="metavops">
+                
+
+                   <h2 class="selection-heading">Firewall finalizado.</h2>
+                   
+                   <p>Abaixo vemos o firewall finalizado e funcioando 24/7 em meu apartamento, hoje tenho o controle do reteamento de pacotes da minha rede LAN, posso incluir regras de segurança, serviços como opn-vpn, proxy com squid, e monitora-lo através do zabbix instalado na nuvem.</p>
+                   
+                   <img class="img-responsive" src="../img/artigos/seguranca/como-montei-um-potente-firewall/firewall-finalizado.jpg" alt="metavops">
+                
+                   <h2 class="selection-heading">Considerações.</h2>
+                   <p>Eu particularmente achei o pfSense muito potente, como não entendia muito sobre a tecnologia cheguei a comprar um curso de R$30,00 reais na udemy, porem caso você não tenha condições de comprar um curso, tem bastante material na internet de forma gratuita, o curso me ajudou a entender como configurar determinados serviços e configurações avançadas do pfSense, e o que mais me impressionou foi consumo de hardware é baixissimo, cheguei a aplicar ataques a fim de testa-lo e no maximo que eu vi chegar foi a 30% de consumo de CPU, porem a maior parte do tempo o firewall fica com um consumo de 2% á 5% de utilização de CPU.</p>
+
+                   <p></p>
+                 
+                 <hr>                      
+  
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <div align="center">
+        <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+            <br>
+                <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/como-montei-um-potente-firewall-usando-pfsense.html" data-width="" data-numposts="5"></div>
+    </div>
+
+
+
+
+       <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.linkedin.com/in/jose-junior-silva/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Jose-cyber">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                           <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

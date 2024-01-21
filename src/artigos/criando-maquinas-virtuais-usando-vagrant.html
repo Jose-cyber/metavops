@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Tutorial sobre como criar maquinas virtuais usando o vagrant e virtual box">
+	<meta name="author" content="José da silva">
+	<meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+	
+	<title>metavops</title>
+
+
+	<!-- Bootstrap Core CSS -->
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link href="../css/clean-blog.min.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	 <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    
+	</script>
+</head>
+
+<body>
+<!-- facebook coments -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+<!-- end facebook coments -->
+
+
+<!-- Cookies  -->
+	<div class="box-cookies hide">
+		<p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+		<div class="btn-cookies"> Aceitar!</div>
+	</div>
+<!-- end cookies -->
+
+
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					Menu <i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="../index.html">metavops</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../about.html">Sobre</a>
+					</li>
+					<li>
+						<a href="../contact.html">Contato</a>
+					</li>
+					  <li>
+						<a href="../categoria.html">Categoria</a>
+					</li>
+				     <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+
+	<!-- Page Header -->
+	<!-- Set your background image for this header on the line below. -->
+	<header class="intro-header" style="background-image: url('https://i.ibb.co/r4QfFGd/vagrant-backgroud.png')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="post-heading">
+						<h1>Criando maquinas virtuais com Vagrant.</h1>
+						<h2 class="subheading">Criando maquinas virtuais usando o vagrant e virtual box.</h2>
+						<span class="meta">Postado por <a href="#">metavops</a> 19 de janeiro de 2022.</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <h2 class="section-heading"> O que é vagrant e pra que ele serve ?</h2>
+                    <p>O vagrant é uma ferramenta desenvolvida pela empresa hashicorp para criação de maquinas virtuais, na qual simplifica e automatiza a geração e configuração, te dando a opção de utilizar diferentes virtualizadores como: Virtual box, VMware, qemu e etc.<br>
+                    Para que o vagrant provisione a maquina virtual, toda a configuração é realizada através de um arquivo de codigo chamado "Vagrantfile", é por meio dele onde será realizado a construção da VM('virtual machine').<br>
+                    Para construção de uma maquina é necessario definir uma "imagem" que seria o sistema operacinal de sua VM('virtual machine'), para isso você pode consultar as boxes disponiveis no <a target="_blank" href="https://app.vagrantup.com/boxes/search">link</a>.<br>
+                    Caso queira saber mais sobre o vagrant acesse a documentação official do vagrant:<br>
+                    <ul>
+                     <li> <a  target="_blank" href="https://www.vagrantup.com/intro">Documentação</a></li>
+                     <li><a target="_blank" href="https://app.vagrantup.com/boxes/search" >Boxes</a></li>
+                     <li><a target="_blank" href="https://www.vagrantup.com/downloads" >Download</a></li>
+                    </ul>
+                    </p>
+
+                    <h2 class="section-heading"> Criando uma maquina virtual ?</h2>
+
+                    <p>Para esse projeto irei utilizar o virtual box como virtualizador padrão, e o objetivo é criar uma maquina virtual com o sistema operacional ubuntu 16.04 LTS com o serviço do MYSQL instalado.<br>
+                    A principal vantagem do vagrant é de que para criar uma VM não é necessario passar por todo aquele setup de instalação que vemos normalmente quando vamos instalar uma VM nova no virtual box ou qualquer outro virtualizador.<img class="img-responsive" src="https://i.ibb.co/JRbrSmL/ubuntu-instala-o.webp" alt="juninho-tecnologia" ></p>
+                    
+                    <p>Em vez disso o vagrant utiliza um codigo que é bem simples de entender, para iniciarmos abra seu terminal(cmd, powershell, bash, shell) na maquina onde o vagrant esta instalado, com seu terminal aberto digite o comando:<br>
+					<strong>vagrant init ubuntu/xenial64</strong>
+					<img class="img-responsive" src="https://i.ibb.co/KWVLsVf/image.png" alt="juninho-tecnologia" >
+					Após digitar o comando acima, o vagrant vai criar um arquivo chamado Vagrantfile no diretorio, e é nele onde é definido as configurações da vm.
+                    </p>
+					<p>Se abrirmos o Vagrantfile no visual studio code, verá que há diversas opções comentadas(#) no arquivo.
+					<img class="img-responsive" src="https://i.ibb.co/V9MfxtM/image.png" alt="juninho-tecnologia" >
+					Nesse caso você pode deletar todo o conteudo do arquivo e digitar o codigo abaixo.
+					<pre>
+<xmp>
+Vagrant.configure("2") do |config|
+	config.vm.box = "ubuntu/xenial64"
+	config.vm.network "public_network"
+	config.vm.hostname = "mysql-server"
+	config.vm.provider "virtualbox" do |vb|
+	 vb.gui = true
+	 vb.cpus =  1
+	 vb.memory = "1024"
+	end
+	  config.vm.provision "shell", inline: <<-SHELL
+		 apt update && apt upgrade -y 
+		 apt install mysql -y
+	   SHELL
+  end
+</xmp>
+				     </pre>
+					</p>
+                    <p>Se caso você não entendeu o codigo acima eu vou explicar oque cada comando acima quer dizer, caso você queira ver o codigo utilizado, ele esta disponivel no meu github, apenas <a target="_blank" href="https://github.com/Jose-cyber/Vagrantfile-ubuntu-mysql">Clique aqui</a> para obter o codigo.<br>
+					<br>
+					<strong>Vagrant.configure("2") do |config|</strong>: Aponta que a versão "2" será utilizada e seta a função "|config|" na qual vai receber os valores de configuração da VM.<br>
+					<strong>config.vm.box = "ubuntu/xenial64"</strong>: Onde apontamos a box na qual vamos utilizar. <br>
+					<strong>config.vm.network "public_network"</strong>: Configura a placa de rede para pegar um IP da rede.<br>
+					<strong>config.vm.hostname = "mysql-server"</strong>: Seta o hostname da maquina<br>
+					<strong>config.vm.provider "virtualbox" do |vb|</strong>: Onde configuramos o virtualizador a ser usado, e onde é setado a função "|vb|" para as configurações do virtual box.<br>
+					<strong>vb.gui = true</strong>: Configuração para quando a VM iniciar ele abrir o virtual box.<br>
+					<strong>vb.cpus =  1</strong>: configuração da quantidade de CPU´s.<br>
+					<strong>vb.memory = "1024"</strong>: Configuração da quantidade de memoria ram.<br>
+					<strong>end</strong>: Onde encerramos a função "|vb|".<br>
+					<strong>config.vm.provision "shell", inline: <<-SHELL</strong>: Configuração para utilização do shell.<br>
+					<strong>apt update && apt upgrade -y </strong>: Atualiza os pacotes e aplica as atualizações na maquina.<br>					
+				    <strong>apt install mysql -y</strong>: Instala o mysql na maquina.<br>
+					<strong>SHELL</strong>: Onde finaliza os scripts de instalação.<br>
+					<strong>end</strong>: Onde finalizamos a função "|config|"<br>
+					</p>
+
+					<p>Para iniciar a maquina virtual, basta digitar o comando:<br>
+					<strong>vagrant up</strong> 
+					<img class="img-responsive" src="https://i.ibb.co/zm2HKsZ/image.png" alt="juninho-tecnologia"> 
+					Após digitar o comando, o vagrant vai verificar se a imagem tem na maquina, caso não tenha ele vai iniciar o download, pode ocorrer durante o procedimento de perguntar sobre em qual interface você deseja colocar em modo "bridge", nesse caso eu escolhi a opção "1".
+					</p>
+				    <p>Após isso o virtual box, vai abrir uma tela onde vai exibir a maquina criada, na maioria das vezes o ususario e senha são sempre os mesmos<br>
+					<strong>Usuario:</strong> vagrant<br>
+					<strong>Senha:</strong> vagrant<br>
+					<img class="img-responsive" src="https://i.ibb.co/YWGH7f8/image.png" alt="juninho-tecnologia">
+					<br>
+                    Áo logarmos na maquina, podemos verificar que hostname da maquina foi setado conforme apontamos acima e vemos que o mysql foi instalado com sucesso na maquina virtual.
+					<img class="img-responsive" src="https://i.ibb.co/S3VyRYg/image.png" alt="juninho-tecnologia">
+					</p>
+					<h2 class="section-heading">Conclusão.</h2>
+					<p>O vagrant é uma excelente ferramenta para criar maquina virtuais, porem em muitos casos ele esta entrando em desuso devido ao fato de hoje existir a possibilidade da utilização de containers, na qual são mais leves e ocupam menos espaço.<br>
+					Caso queira saber mais sobre o docker acesse esse link aqui:<br> 
+					<a target="_blank" href="https://juninhotecnologia.com.br/artigos/Docker-primeiros-passos.html">Docker</a>.<br>
+					Codigo utilizado no artigo:<br>
+					<a target="_blank" href="https://github.com/Jose-cyber/Vagrantfile-ubuntu-mysql">Codigo</a>.
+					
+
+					</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </article>
+    	<div align="center">
+		<h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+		<br>
+		<div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/criando-maquinas-virtuais-usando-vagrant.html" data-width="" data-numposts="5"></div>
+     </div>
+
+
+
+
+
+
+
+
+	<!-- Footer -->
+    <footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<ul class="list-inline text-center">
+						<li>
+							<a href="https://www.linkedin.com/in/jose-junior-silva/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://github.com/Jose-cyber">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						   <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+					</ul>
+					<p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+   
+
+	<!-- jQuery -->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script src="../js/jqBootstrapValidation.js"></script>
+	<script src="../js/contact_me.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+.icon-skills{
+    height:30px; 
+    width: 40px;
+}
+.icon-skills:hover{
+    height: 50px;
+    width: 60px;
+}
+
+/* classe do form de e-mail */
+.box-mail.hide {
+    display: none !important;
+}
+
+.box-mail {
+    position: fixed;
+    background-color: #fff;
+    width: 70%;
+    z-index: 998;
+    bottom: 10px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: #333 5px 5px 5px;
+}
+
+.box-mail .msg-mail,
+.box-mail .btn-mail {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mail-input{
+    border-radius: 200px;
+    margin-block-end: 50px;
+}
+
+.box-mail .btn-mail {
+    background: #00ff33;
+    cursor: pointer;
+    align-self: normal;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+
+
+.close-add{
+    
+
+    margin-left: 90%;
+    color: black;
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+
+    
+}
+/* fim da classe do form de e-mail*/

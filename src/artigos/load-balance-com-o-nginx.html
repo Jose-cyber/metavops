@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Nesse artigo eu mostro como estar ativando a função load balancer do NGINX, e demostro na pratica como estar realizando o balanceamento de carga entre 2 servidores web.">
+	<meta name="author" content="José da silva">
+	<meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+	
+	<title>metavops</title>
+
+
+	<!-- Bootstrap Core CSS -->
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link href="../css/clean-blog.min.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	 <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+<!-- facebook coments -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+<!-- end facebook coments -->
+
+
+<!-- Cookies  -->
+	<div class="box-cookies hide">
+		<p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+		<div class="btn-cookies"> Aceitar!</div>
+	</div>
+<!-- end cookies -->
+
+
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					Menu <i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="../index.html">metavops</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../about.html">Sobre</a>
+					</li>
+					<li>
+						<a href="../contact.html">Contato</a>
+					</li>
+					  <li>
+						<a href="../categoria.html">Categoria</a>
+					</li>
+				     <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+
+	<!-- Page Header -->
+	<!-- Set your background image for this header on the line below. -->
+	<header class="intro-header" style="background-image: url('https://i.ibb.co/pb2vhDM/background-nginx.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="post-heading">
+						<h1>NGINX load balancer.</h1>
+						<h2 class="subheading">Criação de um load balance de servidores web usando o NGINX.</h2>
+						<span class="meta">Postado por <a href="#">metavops</a> 15 de janeiro de 2022.</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Post Content -->
+	  <article>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<h2 class="section-heading">O que é o NGINX ?</h2>
+					   <p>O NGINX é um serviço, que oferece diversos recursos como: servidor HTTP, proxy reverso, proxy de e-mail IMAP/POP3, etc.<br>
+						O NGINX esta sob a licença BSD-like 2-clause, uma de suas principais caracteristicas é de que ele é mais leve e suporta mais requisições que seu concorrente o Apache, porem a comparação e analise tecnica entre esses 2 serviços vai ficar para outro artigo.<br>
+						Nesse POST eu vou mostrar como criar/configurar um load balance de servidores web usando o NGINX para que você possa hospedar sua aplicação de forma segura, garantindo maior disponibilidade e escalabilidade.<br>
+						Caso queira saber mais sobre o NGINX e o Apache clique nos links abaixo para acessar o site oficial de cada um deles.<br>
+						<a href="https://nginx.org/">NGINX</a><br>
+						<a href="https://apache.org/">Apache</a><br>
+						</p>
+
+						<h2 class="section-heading">O que é load balance ?</h2>
+						<p>O load balance como o proprio nome já diz, consiste no ato de balancear a carga entre 2 ou mais recursos para manter a estabilidade, garantir a disponibilidade de uma aplicação ou recurso, o load balance é bastante importante em sistemas e redes de computadores com muito trafego pois ajuda a não sobrecarregar um recurso especifico.
+						O load balance que pode ser feito tanto em software tanto em hardware, um exemplo disso são os servidores que possuem 2 ou mais fontes de alimentação, tambem é possivel possuir 2 links de internet e através deles balancear a carga e através de um fail over configurar um para assumir o outro quando houver quedas. 
+						</p>
+
+						<h2 class="section-heading">Como vai funcionar ?</h2>
+						<p>Neste pequeno projeto de exemplo vou utilizar 1 instancia(ubuntu) com o NGINX instalado, e vou utilizar mais 2 instancias(centOS) onde cada uma delas recebe um IP interno e executa um webserver por meio do apache2.</p>
+						<p>A principal intensão nesse caso, é utilizar o NGINX como master para balancear o trafego entre 2 servidores web na qual vão ser os slave's.
+						<img class="img-responsive" src="https://i.ibb.co/3YY2yJy/Load-balance.jpg" alt="juninho-tecnologia" >
+						</p>
+						<h2 class="section-heading">Instalando o NGINX.</h2>
+						<p>Vamos começar atualizando os repositorios do nosso sistema, e aplicando a atualizações baixadas logo em seguida, para isso digite o comando abaixo:<br>
+						<strong>apt update && apt upgrade -y</strong></p>
+						<img class="img-responsive" src="https://i.ibb.co/rZhQDnF/image.png" alt="juninho-tecnologia" >
+						
+						<p>Após atualizarmos nosso servidor vamos instalar o nginx, para isso digite o comando abaixo:<br>
+						<strong>apt install nginx -y</strong></p>              
+						<img class="img-responsive" src="https://i.ibb.co/PgZVyKk/image.png" alt="juninho-tecnologia" >
+						<p>Após instalarmos o NGINX vamos abrir as portas do serviço no firewall do servidor, para isso use o comando abaixo:<br>
+							<strong>iptables -I INPUT -p tcp --dport 80 -j ACCEPT</strong><br>
+						</p>
+						<p>Ao executar o comando acima, você esta abrindo a porta 80, na qual vai servir para rodar o protocolo HTTP(80).</p>
+
+						<p>Após instalarmos o NGINX, e abrirmos as portas do serviço, vamos verificar se o serviço esta funcionando, para isso digite comando abaixo:<br>
+							<strong>systemctl status nginx</strong>
+						</p>
+						<img class="img-responsive" src="https://i.ibb.co/sFJKCTk/image.png" alt="juninho-tecnologia" >
+						<p>podemos confirmar se ele esta ativo ou não olhando a terceira linha, verifique que ele esta com o status de:<strong>"Active: active (runing)" </strong>que significa que o serviço esta ativo.</p>
+
+						
+						<h2 class="section-heading">Configurando o load-balance.</h2>
+                        <p>Para iniciarmos a configuração do load balance, é necessario estar parando o serviço do NGINX, para isso use o comando abaixo:<br>
+							<strong>systemctl stop nginx</strong><br>
+							caso queira saber se o serviço parou, use o comando:<br>
+							<strong>systemctl status nginx</strong><br>
+							<img class="img-responsive" src="https://i.ibb.co/TbFnzVb/image.png" alt="juninho-tecnologia" >
+							verifica que na imagem mostra como:<strong>"Active: inactive(dead)" </strong>isso significa que nosso serviço esta parado.
+						</p>
+						<p>Aṕos pararmos o serviço do NGINX, vamos acessar a pasta "sites-available", para isso digite o comando abaixo:<br> 
+						<strong>cd /etc/nginx/sites-available/</strong><br>
+						<img class="img-responsive" src="https://i.ibb.co/jwdDRKc/image.png" alt="juninho-tecnologia" >
+						Observer que após digitarmos o comando:<br>
+						<strong>ls</strong><br>
+						Ele nos retorna um arquivo chamado "default", é a partir desse arquivo na qual vai ser editado para a configuração do load balance para isso vamos primeiro fazer um backup do arquivo de configuração padrão, para isso use o comando:<br>
+						<strong>cp default default-bkp</strong><br>
+						</p>
+						<p>Após gerar o backup do arquivo "default" vamos editar o codigo dentro dele, para isso você pode estar usando um editor de texto de sua preferencia, neste caso eu estou usando o nano, segue o comando abaixo:<br>
+						<strong>nano default</strong><br>
+						Após abrir o arquivo, apague todo o conteudo dele, e digite o codigo abaixo e salve:<br>
+						</p>
+						<code>
+							<pre>
+# definindo um grupo atraves do comando upstream, e nomeei o grupo como nodes
+upstream nodes {
+
+#adiciondo os servidores após o comando "server"	
+server 10.0.0.183; 
+server 10.0.0.182;
+
+}
+
+server{
+	# lendo a porta 80 do nginx
+	listen 80;
+	server_name  localhost;
+    
+ # no location apontamos o grupo "nodes" que definimos acima no recurso proxy_pass
+	location /{
+		proxy_pass http://nodes;
+	}
+}
+
+							</pre>
+						</code>
+
+
+						<p>Prontinho agora vamos testar se as configurações que realizamos podem ser aplicadas, ou se existe algum erro no nosso processo de configuração, para isso digite o comando:<br>
+						<strong>nginx -t</strong><br>
+						<img class="img-responsive" src="https://i.ibb.co/Bt4p3Xm/image.png" alt="juninho-tecnologia" >
+						Se caso a saida do comando for essa da imagem significa as configurações foram aplicadas corretamente e de que não há nenhum erro em nossos arquivos de configuração.<br>
+						Com isso podemos startar nosso serviço novamente usando o comando:<br>
+						<strong>systemctl start nginx</strong>
+						</p>
+					  
+						<h2  class="section-heading">Load balance em funcionamento.</h2>
+						<p>Para testar o load balance, é so acessarmos o IP ou dominio do servidor NGINX para que ele divida a carga entre os 2 servidores, ao acessarmos vemos que ele exibi o servidor 1:<br>
+						<img class="img-responsive" src="https://i.ibb.co/sQfdd51/server.png" alt="juninho-tecnologia"><br>
+						Ao atualizar a pagina vemos que ele altera o trafego para o servidor 2.<br>
+						<img class="img-responsive" src="https://i.ibb.co/zXhz69H/server-2.png" alt="juninho-tecnologia"><br>
+						</p>
+						<h2 class="section-heading">Conclusão.</h2>
+						<p>O NGINX possui diversos recursos, e é uma ferramenta muito usada em diversas aplicações, neste artigo eu procurei trazer algo simples e espero que de facil entendimento sobre a utilização do NGINX.
+						</p>
+						<p>Eu cheguei a criar um pequeno projeto onde realizo o mesmo projeto porem utilizando o container docker por meio do docker-compose, caso queira verificar acesse o link abaixo:<br>
+						<br>
+						<a href="https://github.com/Jose-cyber/Docker-compose-nginx-load-balance">Docker-compose-nginx-load-balance</a>
+						</p>
+						<hr>
+				</div>
+			</div>
+		</div>
+	</article>
+
+
+    <div align="center">
+        <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+          <br>
+             <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/load-balance-com-o-nginx.html" data-width="" data-numposts="5"></div>
+    </div>
+
+	<!-- Footer -->
+  <footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<ul class="list-inline text-center">
+						<li>
+							<a href="https://www.linkedin.com/in/jose-junior-silva/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://github.com/Jose-cyber">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						   <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+					</ul>
+					<p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+   
+
+	<!-- jQuery -->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script src="../js/jqBootstrapValidation.js"></script>
+	<script src="../js/contact_me.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

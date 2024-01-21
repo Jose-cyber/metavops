@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="O metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias">
+    <meta name="author" content="José da silva">
+    <meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+    
+    <title>metavops</title>
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+
+<!-- Cookies  -->
+    <div class="box-cookies hide">
+        <p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+        <div class="btn-cookies"> Aceitar!</div>
+    </div>
+<!-- end cookies -->
+<!--facebook-coments -->
+<div id="fb-root"></div>
+   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="U7q6QCQl"></script>
+<!-- end facebook-coments -->
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="../index.html">metavops</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="../contact.html">Contato</a>
+                    </li>
+                      <li>
+                        <a href="../categoria.html">Categoria</a>
+                    </li>
+                    <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('https://i.ibb.co/fFnVBJv/backgroud-permissionamento.jpg')" alt="https://pixabay.com/pt/photos/tecnologia-da-informa%C3%A7%C3%A3o-3923009/" >
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Como alterar permissões no linux.</h1>
+                        <h2 class="subheading">Saiba como utilizar o comando CHMOD.</h2>
+                          <span class="meta">Postado por <a href="#">metavops</a> 4 de julho de 2021.</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+                    <h2 class="section-heading">Verificando permissões de pastas.</h2>
+
+                    <p>Vamos criar uma pasta para começarmos os exercicios, para isso use o comando <strong>mkdir [nome da pasta]</strong> para criar uma pasta comforme o exemplo abaixo</p> 
+                    <img class="img-responsive" src="https://i.ibb.co/Ky52FKR/image.png" alt="juninho-tecnologia" >
+                    <p>para visualizarmos as permissões de pastas e arquivos no linux, utilizaremos o comando <strong>ls -l</strong></p>
+                    <img class="img-responsive" src="https://i.ibb.co/1bFLpZS/image.png" alt="juninho-tecnologia">
+
+                    <p>Após digitarmos o comando <strong>ls -l</strong> a saida dele nos trará diversas indformações sobre a pasta, colando em ordem seria:<br>tipo, permisão(proprietario, grupo e outros) links, proprietario(owner), grupo, tamanho, data, hora e nome da pasta.</p>
+
+                    <blockquote>drwxrwxr-x 2 ubuntu ubuntu 4096 May 31 03:39 pasta-teste</blockquote>
+                    
+                    <p>Vamos nos concentrar nos conectar no primeiro bloco da saida desse comando, que seria:<br> <strong>drwxrwxr-x</strong></p>
+                       
+                    <p>Através desse primeiro bloco conseguimos estar localizando o tipo.</p>
+                    
+                    <p><strong>d</strong>rwxrwxr-x<br>
+                    Á letra <strong>d</strong> indica o tipo, que nesse caso seria um diretorio.</p>
+                    
+                    <p>Porem existem outros tipos, por exeplo:</p>
+                    
+                    <button class="accordion">Tipos.</button>
+                      <div class="panel">  
+                            <p><strong>-</strong>rwxrwxr-x<br>
+                            O <strong>-</strong> indica que é um arquivo de texto ou arquivo comun do usuario.</p>
+                        <hr>
+                            <p><strong>c</strong>rwxrwxr-x<br>
+                            O <strong>c</strong> indica que é um dispositivo de caracteres.</p>
+                        <hr>
+                            <p><strong>b</strong>rwxrwxr-x<br>
+                            O <strong>b</strong> indica que é um dispositivo de blocos.</p>
+                        <hr>
+                            <p><strong>l</strong>rwxrwxr-x<br>
+                            O <strong>l</strong> indica que é um link simbolico.</p>
+                        <hr>
+                            <p><strong>p</strong>rwxrwxr-x<br>
+                            O <strong>p</strong> indica que é um pipe.</p>
+                        <hr>
+                            <p><strong>s</strong>rwxrwxr-x<br>
+                            O <strong>s</strong> indica que é um socket.</p>'
+                       </div>
+
+                    <p>Após indentificarmos o tipo, vamos verificar as permissões do arquivo ou diretorio, com a mesma saida que tivemos acima do comando "ls -l".<br>
+                    É importante lebrar que no linux temos <strong>3 conjunto de permissões</strong> para <strong>3 tipos de acesso</strong>.<br>
+                    O 3 conjuntos são eles:<br>
+                    
+                    <strong>Proprietario</strong><br>
+                    <strong>Grupo</strong><br>
+                    <strong>Outros</strong><br>
+                    </p>
+                    <p>E as permissões são basicamente dividas em 3 tipos de acesso que são:</br>
+                    <strong>r</strong> = read | leitura</br>
+                    <strong>w</strong> = write | escrita</br>
+                    <strong>x</strong> = execution | execução</br>
+                    e<br>
+                    <strong>-</strong> = que indica sem acesso 
+                    </p>
+                   
+                    <p>As permissões são sempre orgranizadas na seguinte ordem(usuario, grupo, outros) os seja na saida:<br>
+                    drwxrwxr-x<br>
+                    <br>
+                    O <strong>d</strong> indica que é um diretorio e as permisões são:<br>
+                    <strong>Usuario:</strong> rwx = o usuario tem permissão de leitura, escrita e execução<br>
+                    <strong>Grupo:</strong> rwx =  o grupo associado a pasta tem permissão de leitura, escrita e execução<br>
+                    <strong>Outros: </strong>r-x = indica que outros tem apenas permissão de leitura e execução<br>
+                    </p>  
+                    <p>Ou seja a pasta acima tem uma permisão <strong>775</strong> porem você deve estar se perguntando como eu chego nesse numero ? e a resposta é bem simples, vamos atribuir uma valor a cada permissão:<br>
+                    <strong>r</strong> = read(leitura) vai valer <strong>4</strong></br>
+                    <strong>w</strong> = write(escrita) vai valer <strong>2</strong></br>
+                    <strong>x</strong> = execution(execução) vai valer <strong>1</strong></br>
+                    Após entender esses valores, quando você for olhar as permissões novamente olhe dessa forma:<br>
+                    onde temos "rwx" temos o valor "4+2+1" que é igual a 7<br> 
+                    se caso tivéssemos a permissão "r-x" teriamos o valor "4+0+1" que seria igual a 5.</p>
+
+                    <p>sabendo que cada um dos 3 conjuntos pode ter apenas a permissão maxima de "rwx" que corresponde ao valor 7, quando vermos as permissões por exemplo:<br>
+                    <strong>777</strong> = sabemos que usuario, grupo e outros tem permissão total a pasta.
+                    </p>
+
+
+                    
+
+                     <h2 class="section-heading">Aplicando o comando CHMOD na pratica.</h2>
+
+                     <p>Vamos alterar a permissão da pasta mostrada no exemplo acima de 775 para 777, para isso utilizaremos a seguinte sitaxe para o comando:<br><strong>chmod [permissão] arquivo/diretorio</strong>.</p>
+
+                     <img class="img-responsive" src="https://i.ibb.co/GRLW5CW/Captura-de-tela-de-2021-07-04-01-11-29.png" alt="juninho-tecnologia">
+
+                     <p>Após aplicar o comando: <strong>chmod 777 pasta-teste/</strong> vamos executar novamente o comando <strong>ls -l</strong> para checar a permissão da pasta.</p>
+
+                     <img class="img-responsive" src="https://i.ibb.co/bgG8JrF/Captura-de-tela-de-2021-07-04-01-14-14.png" alt="juninho-tecnologia" >
+
+                     <p>Veja que a permissão da pasta foi para 777, ou seja permissão total para usraios, grupos e outros.</p>
+
+                     <p>Agora vamos aplicar uma permissão de 700 para a pasta do exemplo acima, a permissão 700 permite apenas acesso por meio do usuario(owner).</p>
+
+                     <img class="img-responsive" src="https://i.ibb.co/nbZwPfg/Captura-de-tela-de-2021-07-04-01-34-19.png" alt="juninho-tecnologia" >
+
+                     <p>Após isso vamos aplicar o comando <strong>ls -l</strong> para visualizarmos se o comando foi aplicado</p>
+
+                     <img class="img-responsive" src="https://i.ibb.co/pPwNrgM/Captura-de-tela-de-2021-07-04-01-37-00.png" alt="juninho-tecnologia" >
+                      
+                     <p>Veja que a permissão da pasta foi para 700, e apenas o usuario(owner) da pasta porderá acessar.</p>
+
+                     <h2 class="section-heading">Aplicando a permissão recursivamente.</h2>
+                      
+                     <p>Vamos imaginar um cenario onde você tem de alterar a permissão de diversas pastas e arquivos do sistema para que todas as pastas e arquivos dentro dequele diretorio tenham a mesma permissão de acesso, para aplicarmos a permissão de forma recursiva, utilizaremos o argumento "-R" no comando: <strong>chmod -R [permissão] arquivo/diretorio </strong>.</p>
+                     <p>Abaixo temos a nossa "pasta-teste" e criei dentro dela outras 2 pastas, que estão com a permissão 755 como vemos na imagem abaixo.</p>
+                     <img class="img-responsive" src="https://i.ibb.co/nrrKGrm/Captura-de-tela-de-2021-07-04-01-44-22.png" alt="juninho-tecnologia" >
+
+                     <p>Vamos alterar a permissão de da "pasta-teste" e das pastas subsequentes a ela com a permissão 777, para isso utilizarei o comando: <strong>chmod -R 777 pasta-teste/</strong>.</p>
+
+                     <img class="img-responsive" src="https://i.ibb.co/JtCdDTS/Captura-de-tela-de-2021-07-04-02-01-15.png" alt="juninho-tecnologia" >
+
+
+                     <p>Mostrando que as permissões replicadas paras as pastas subsequentes "pasta-1" e "pasta-2".</p>
+                     <img class="img-responsive" src="https://i.ibb.co/NsT8BQL/Captura-de-tela-de-2021-07-04-01-56-43.png" alt="juninho-tecnologia" >
+
+                     <p>Pronto permissão aplicada as pastas com sucesso!</p>
+                     
+                     <h2 class="section-heading"> Conclusão.</h2>
+
+                     <p>Basicamente para sabermos a permissão a aplicada a um arquivo ou diretorio, basta visualizarmos cada permissão e associarmos ao valor de cada delas tem, como vemos abaixo:<br> 
+
+                    <strong>r</strong> = read(leitura) vai valer <strong>4</strong></br>
+                    <strong>w</strong> = write(escrita) vai valer <strong>2</strong></br>
+                    <strong>x</strong> = execution(execução) vai valer <strong>1</strong></br>
+                    Ápós isso é só juntar, somar, e colocar na ordem:<strong>usuario</strong>, <strong>grupo</strong> e <strong>outros</strong>.</p>
+
+                    <p>Vale lembrar de que essa é apenas uma das formas de aplicarmos e visualizar essas permissões.</p>
+
+
+                   <hr>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <div align="center">
+        <h5>Ficou alguma duvida ?</h5>
+        <h5>Deixe seu comentario, duvida ou sugestão sobre o post.</h5>
+           <br>
+               <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/permissionamento-de-arquivos-e-diretorios-linux.html" data-width="" data-numposts="5"></div>
+    </div>
+
+
+ <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.linkedin.com/in/jose-junior-silva/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Jose-cyber">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                           <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   
+
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="O metavops é um site/blog voltado para área de tecnologia, com objetivo de apresentar tutoriais e desmistificar tecnologias">
+	<meta name="author" content="José da silva">
+	<meta name="google-site-verification" content="DcYngUkNnk3CySizIcZSJvcSggRXCujqKSl6ggnMTy4" />
+	
+	<title>metavops</title>
+
+
+	<!-- Bootstrap Core CSS -->
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link href="../css/clean-blog.min.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	 <link href="../img/favicon_1.ico" rel="shortcut icon"/>
+
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-09KTC3549Z"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-09KTC3549Z');
+    </script>
+</head>
+
+<body>
+<!-- facebook coments -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v10.0" nonce="FA23O2wx"></script>
+<!-- end facebook coments -->
+
+
+<!-- Cookies  -->
+	<div class="box-cookies hide">
+		<p class="msg-cookies">Este site usa cookies para garantir que você obtenha a melhor experiência, caso tenha duvidas acesse a nossa <a href="../privacidade.html">Política de Privacidade</a> </p>
+		<div class="btn-cookies"> Aceitar!</div>
+	</div>
+<!-- end cookies -->
+
+
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					Menu <i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="../index.html">metavops</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../about.html">Sobre</a>
+					</li>
+					<li>
+						<a href="../contact.html">Contato</a>
+					</li>
+					  <li>
+						<a href="../categoria.html">Categoria</a>
+					</li>
+				     <li>
+                        <a href="../privacidade.html">Privacidade</a>
+                    </li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+
+	<!-- Page Header -->
+	<!-- Set your background image for this header on the line below. -->
+	<header class="intro-header" style="background-image: url('https://i.ibb.co/pb2vhDM/background-nginx.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="post-heading">
+						<h1>NGINX configuração basica.</h1>
+						<h2 class="subheading">Configuração basica e geração de certificado SSL.</h2>
+						<span class="meta">Postado por <a href="#">metavops</a> 29 de agosto de 2021.</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Post Content -->
+	<article>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+					<h2 class="section-heading" >O que é o NGINX ?</h2>
+					<p>O NGINX é um serviço, que oferece diversos recursos como: servidor HTTP, proxy reverso, proxy de e-mail IMAP/POP3, etc.<br>
+					O NGINX esta sob a licença BSD-like 2-clause, uma de suas principais caracteristicas é de que ele é mais leve e suporta mais requisições que seu concorrente o Apache, porem a comparação e analise tecnica entre esses 2 serviços vai ficar para outro artigo.<br>
+					Nesse POST eu vou mostrar como criar/configurar um servidor web usando o NGINX para que você possa hospedar sua aplicação de forma segura e gratuita.<br>
+					Caso queira saber mais sobre o NGINX e o Apache clique nos links abaixo para acessar o site oficial de cada um deles.<br>
+					<a href="https://nginx.org/">NGINX</a><br>
+					<a href="https://apache.org/">Apache</a><br>
+				    </p>
+
+
+
+                    <h2 class="section-heading">Hardware e recursos utilizados.</h2>
+
+                    <p>Para esse tutorial estou usando um servidor com o sistema operacional ubuntu minimal 20.4, com 2 cores e 1gb de ram, e vou realizar todo o procedimento usando o terminal, conectado ao servidor via SSH.<br>
+                    Para configurar e gerar o certificado SSL vou usar o dominio
+                    <strong>"servidornginx.ddns.net"</strong> para configuração desse servidor de teste.</p>
+
+                    <h2 class="section-heading">Instalando o NGINX.</h2>
+                    <p>Vamos começar atualizando os repositorios do nosso sistema, e aplicando a atualizações baixadas logo em seguida, para isso digite o comando abaixo:<br>
+                    <strong>apt update && apt upgrade -y</strong></p>
+                    <img class="img-responsive" src="https://i.ibb.co/rZhQDnF/image.png" alt="juninho-tecnologia" >
+                     
+                    <p>Após atualizarmos nosso servidor vamos instalar o nginx, para isso digite o comando abaixo:<br>
+                    <strong>apt install nginx -y</strong></p>              
+                    <img class="img-responsive" src="https://i.ibb.co/PgZVyKk/image.png" alt="juninho-tecnologia" >
+                    <p>Após instalarmos o NGINX vamos abrir as portas do serviço no firewall do nosso servidor, para isso use os 2 comandos abaixo:<br>
+                    <strong>iptables -I INPUT -p tcp --dport 80 -j ACCEPT<br>
+                    iptables -I INPUT -p tcp --dport 443 -j ACCEPT</strong><br></p>
+                    <p>Ao executar esse comandos acima, você esta abrindo as portas 80 e 443, que vão servir para rodar os protocolos HTTP(80) e HTTPS(443).</p>
+                     
+                    <p>Após instalarmos o NGINX, e abrirmos as portas do serviço, vamos verificar se o serviço esta funcionando, para isso digite comando abaixo:<br>
+                    <strong>systemctl status nginx</strong></p>
+                    <img class="img-responsive" src="https://i.ibb.co/sFJKCTk/image.png" alt="juninho-tecnologia" >
+                    <p>podemos confirmar se ele esta ativo ou não olhando a terceira linha, verifique que ele esta com o status de:<strong>"Active: active (runing)" </strong>que significa que o serviço esta ativo.</p>
+                    <p>Para atestarmos o funcionamento podemos acessar o serviço por meio do navegador utilizando-se do dominio que foi configurado ou por meio do IP do servidor.<br>
+                    	dominio:<br></p>
+                    	<img class="img-responsive" src="https://i.ibb.co/zJWLKYk/image.png" alt="juninho-tecnologia">
+                    	<br>
+                    	<p>Por meio do IP:<br>
+                    		<img class="img-responsive" src="https://i.ibb.co/n1v39m2/image.png" alt="juninho-tecnologia" >
+                        </p>
+          
+
+                    
+                    <h2 class="section-heading">Configurando o seu site.</h2>
+                    <p>Para iniciarmos a configuração no nosso site "servidornginx.ddns.net" vamos começar parando o serviço do NGINX, para isso use o comando abaixo:<br>
+                    	<strong>systemctl stop nginx</strong><br>
+                    	caso queira saber se o serviço parou, use o comando:<br>
+                    	<strong>systemctl status nginx</strong><br>
+                        <img class="img-responsive" src="https://i.ibb.co/TbFnzVb/image.png" alt="juninho-tecnologia" >
+                        verifica que na imagem mostra como:<strong>"Active: inactive(dead)" </strong>isso significa que nosso serviço esta parado.
+                    </p>
+                    
+                    <p>Aṕos pararmos o serviço do NGINX, vamos acessar a pasta "sites-available", para isso digite o comando abaixo:<br> 
+                    <strong>cd /etc/nginx/sites-available/</strong><br>
+                    <img class="img-responsive" src="https://i.ibb.co/jwdDRKc/image.png" alt="juninho-tecnologia" >
+                    Observer que após digitarmos o comando:<br>
+                    <strong>ls</strong><br>
+                    Ele nos retorna um arquivo chamado "default", vamos copiar esse arquivo para criarmos a partir dele o arquivo de configuração do nosso site, para isso vamos usar o comando:<br>
+                    <strong>cp default servidornginx.ddns.net</strong><br>
+                    <img class="img-responsive" src="https://i.ibb.co/SVdVnym/image.png" alt="juninho-tecnologia" >
+                    Verifica que após digitarmos o comando <strong>ls</strong> ele exibi o arquivo que criamos a partir do arquivo default.</p>
+
+                    <p>Após criarmos o nosso arquivo de configuração, vamos acessar a pasta "sites-enabled" com o comando:<br>
+                    	<strong>cd /etc/nginx/sites-enabled</strong><br>
+                    	<img class="img-responsive" src="https://i.ibb.co/tDYcPDV/image.png" alt="juninho-tecnologia">
+                    	Após acessarmos o diretorio e execurtarmos o comando:<br>
+                    	<strong>ls -l</strong><br>
+                    	Repare que dentro desse diretorio temos um arquivo chamado "default" que é um link simbolico, que aponta para o arquivo de configuração do site na pasta "sites-available" caso você não saiba oque é um link simbolico, em breve faço um post explicando sobre.
+                    </p>
+                            
+                    	<p>Vamos excluir esse link simbolico, e vamos gerar um novo, para isso use o comando:<br>
+                    		<strong>rm default</strong><br>
+                    	Após removermos o arquivo vamos criar um novo, para isso vamos usar o seguinte comando:<br>
+                        <strong>ln -s /etc/nginx/sites-available/servidornginx.ddns.net default</strong><br>
+                        <img class="img-responsive" src="https://i.ibb.co/pJMfGW3/image.png" alt="juninho-tecnologia" >
+                        Para confirmar a criação do arquivo, você pode estar checando usando o comando:<br>
+                        <strong>ls -l</strong></p>
+                    
+
+                    <p>Prontinho agora vamos testar se as configurações que realizamos podem ser aplicadas, ou se existe algum erro no nosso processo de configuração, para isso digite o comando:<br>
+                    <strong>nginx -t</strong><br>
+                    <img class="img-responsive" src="https://i.ibb.co/Bt4p3Xm/image.png" alt="juninho-tecnologia" >
+                    Se caso a saida do comando for essa da imagem significa as configurações foram aplicadas corretamente e de que não há nenhum erro em nossos arquivos de configuração.<br>
+                    Com isso podemos startar nosso serviço novamente usando o comando:<br>
+                    <strong>systemctl start nginx</strong>
+                    </p>
+
+
+                    <h2 class="section-heading">Gerando o certificado SSL.</h2>
+
+                    <p>Para gerarmos nosso certificado SSL, vamos utilizar um programa chamado certbot. para quem não conhece o certbot é um gerador de certificado construido a partir de uma linguagem de programação chamada python.</p>
+
+                    <p>Vamos começar instalando o certbot, para isso vamos utilizar o seguinte comando:<br>
+                    <strong>apt install certbot -y</strong></p>
+                    <img class="img-responsive" src="https://i.ibb.co/FBnfgt3/image.png" alt="juninho-tecnologia" >
+
+
+                    <p>Após isso vamos acessar a pasta "sites-available" para gerarmos nosso certificado SSL, para acessarmos a pasta vamos usar o seguinte comando:<br>
+                    <strong>cd /etc/nginx/sites-available/</strong></p>
+                    <img class="img-responsive" src="https://i.ibb.co/GsTgpk3/image.png" alt="juninho-tecnologia" >
+                    
+                    <p>Após acessarmos a pasta "sites-available" vamos executar o seguinte comando para gerarmos o certificado SSL:<br>
+                    <strong>certbot certonly -d servidornginx.ddns.net -d servidornginx.ddns.net</strong><br>
+                    esse comando que digitamos acima, é baseado na seguinte sintaxe:<br>
+                    <i>certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN]</i></p>
+                    <img class="img-responsive" src="https://i.ibb.co/m94FkPP/image.png" alt="juninho-tecnologia" >
+                    <p>Vamos selecionar a opção <strong>spin up a temporary webserver(standalone)</strong> para isso, quando aparecer essa tela em seu teclado, digite:<br> <strong>1</strong><br>
+                    e tecle enter.</p>
+                    <p>Ápos isso ele vai pedir seu e-mail para que ele possa te alertar quando sua chave estiver proximo de expirar.</p>
+                    
+                   
+                    <img class="img-responsive" src="https://i.ibb.co/cwNpSj1/image.png" alt="juninho-tecnologia" >
+                    <p>Ápos isso ele vai pedir para que você aceite os termos de serviço, para isso<br>
+                    	digite: <strong>A</strong><br>e tecle enter.</p>
+                    <p>E por ultimo, ele vai te perguntar se você deseja compartilhar seu e-mail para a equipe de desenvolvedores do certbot, eu selecionei <strong>Y</strong> e teclei enter para aceitar, mas essa opção vai da preferencia de cada um.</p>
+                    <img class="img-responsive" src="https://i.ibb.co/0X7113C/image.png" alt="juninho-tecnologia">
+                    </p>Pronto, já geramos as chaves do nosso certificado SSL, se você reparar no primeiro topico do item <strong>Imported notes:</strong> temos a informação que os arquivos necessarios para configuração do nosso certificado SSL foi gerado com sucesso e os arquivos estão salvos no diretorio<b>/etc/letsencrypt/live/servidornginx.ddns.net/</b>
+                    <p>Para adicionarmos o nosso certificado SSL ao NGINX, precisamos anotar o caminho dos 2 arquivos que aparecem na imagem:<br></p>
+                    
+                    <b>/etc/letsencrypt/live/servidornginx.ddns.net/fullchain.pem</b><br>
+                    <b>/etc/letsencrypt/live/servidornginx.ddns.net/privkey.pem</b>
+                    <p>após anotarmos esse caminho, vamos inseri-lo no arquivo de configuração do NGINX.</p>
+
+                    <h2 class="section-heading">Configurando o certificado SSL.</h2>
+
+                    <p>Com o certificado gerado vamos editar o arquivo de configuração do NGINX para habilitarmos a porta 443 e vamos indicar o caminho da chaves do certificado SSL gerado. para isso acesse o arquivo de confuração do NGINX que criamos com um editor de texto, la no começo do passo a passo.<br>
+                    <strong>nano /etc/nginx/sites-available/servidornginx.ddns.net</strong><br>
+                    Após digitar esse comando ele abrirá o seguinte codigo abaixo.</p>
+                     
+ <pre>
+   <code>
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# https://www.nginx.com/resources/wiki/start/
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+# https://wiki.debian.org/Nginx/DirectoryStructure
+#
+# In most cases, administrators will remove this file from sites-enabled/ and
+# leave it as reference inside of sites-available where it will continue to be
+# updated by the nginx packaging team.
+#
+# This file will automatically load configuration files provided by other
+# applications, such as Drupal or Wordpress. These applications will be made
+# available underneath a path with that package name, such as /drupal8.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	# SSL configuration
+	#
+	# listen 443 ssl default_server;
+	# listen [::]:443 ssl default_server;
+	#
+	# Note: You should disable gzip for SSL traffic.
+	# See: https://bugs.debian.org/773332
+	#
+	# Read up on ssl_ciphers to ensure a secure configuration.
+	# See: https://bugs.debian.org/765782
+	#
+	# Self signed certs generated by the ssl-cert package
+	# Don't use them in a production server!
+	#
+	# include snippets/snakeoil.conf;
+
+	root /var/www/html;
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name _;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+
+	# pass PHP scripts to FastCGI server
+	#
+	#location ~ \.php$ {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# With php-fpm (or other unix sockets):
+	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+	#	# With php-cgi (or other tcp sockets):
+	#	fastcgi_pass 127.0.0.1:9000;
+	#}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	#location ~ /\.ht {
+	#	deny all;
+	#}
+}
+
+
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+#server {
+#	listen 80;
+#	listen [::]:80;
+#
+#	server_name example.com;
+#
+#	root /var/www/example.com;
+#	index index.html;
+#
+#	location / {
+#		try_files $uri $uri/ =404;
+#	}
+#}     
+	</code>
+</pre>
+                   
+<p>Com o arquivo aberto vamos primeiro descomentar a linha:</p>
+<pre>
+     <code>
+# listen 443 ssl default_server;
+# listen [::]:443 ssl default_server;
+	</code>
+</pre>
+<p>Para descomentarmos á linha, basta removermos as "<strong>#</strong>" para descomentarmos, e vai ficar dessa forma:</p>
+<pre>
+	<code>
+listen 443 ssl default_server;
+listen [::]:443 ssl default_server;
+   </code>
+</pre>
+
+<img class="img-responsive" src="https://i.ibb.co/frRvG1P/Captura-de-tela-de-2021-08-01-03-30-15.png" alt="juninho-tecnologia">
+<p>Descomentando essa linha nós habilitamos a porta 443 no NGINX.</p>
+<p>Após isso vamos adicionar o caminho dos arquivos do nosso certificado SSL, para isso vamos adicionar essa bloco de codigo.
+
+<pre>
+	<code>
+ssl_certificate /etc/letsencrypt/live/servidornginx.ddns.net/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/servidornginx.ddns.net/privkey.pem;
+    </code>
+</pre>
+</p>
+<strong>[ ssl_certificate ]</strong> e o <strong>[ caminho da chave fullchain ]</strong><br>
+<strong>[ ssl_certificate_key ]</strong> e o <strong>[ caminho da chave privkey ]</strong></p>
+<p>Após adicionar o caminho das chaves e descomentar o item que habilita a porta 443, o seu arquivo de configuração vai ficar como o arquivo da imagem abaixo.</p>
+<img class="img-responsive" src="https://i.ibb.co/1JmrhhJ/Captura-de-tela-de-2021-08-01-03-42-57.png" alt="juninho-tecnologia">
+<p>Após isso podemos salvar o arquivo e testarmos o serviço do NGINX, para verificarmos se não há nenhum erro no arquivo.<br>
+para isso utilize o comando:<strong> nginx -t</strong><br>
+<img class="img-responsive" src="https://i.ibb.co/qxKT38J/Captura-de-tela-de-2021-08-01-03-44-04.png" alt="juninho-tecnologia">
+<br>
+Ápós isso vamos restartar o serviço do NGINX, para isso utilizaremos o comando: <strong>systemctl restart nginx</strong><br>
+</p>
+
+<h2 class="section-heading">Testando o webserver.</h2>
+<p>Para testarmos nosso webserver, e verificar se o certificado SSL foi configurado com sucesso, precisamos acessa-lo utilizando o <strong>HTTPS</strong> para isso precisamos adicionar a seguinte sintaxe antes do link: <strong>HTTPS:// [ link ou IP do servidor ]</strong><br>
+ou seja, vamos acessar com: https://servidornginx.ddns.net</p>
+
+<img class="img-responsive" src="https://i.ibb.co/gRnFcqm/Captura-de-tela-de-2021-08-01-03-47-31.png" alt="juninho-tecnologia">
+
+<p>Acima podemos verificar que o nosso webserver utilizando o NGINX esta funcionado suportando os protocolos <strong>HTTP/HTTPS</strong>.</p>
+
+
+<h2 class="section-heading">Conclusão.</h2>
+<p>
+	Nesse artigo vemos como criar e configurar um servidor HTTP/HTTPS de forma simples e rapida, caso tenha alguma duvida ou sugestão comente abaixo, ou acesse a aba <strong><a href="../contact.html"
+		>Contato</a></strong> e me mande sua duvida ou sugestão.
+</p>
+
+
+
+		             <hr>
+				 </div>
+			</div>
+		</div>
+	</article>
+   
+	<div align="center">
+        <h5>Deixe seu comentario ou sugestão sobre o post.</h5>
+        <br>
+        <div class="fb-comments" data-href="https://juninhotecnologia.com.br/artigos/como-configurar-e-gerar-chaves-ssl-nginx.html" data-width="" data-numposts="5"></div>
+     </div>
+
+	<!-- Footer -->
+  <footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<ul class="list-inline text-center">
+						<li>
+							<a href="https://www.linkedin.com/in/jose-junior-silva/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.facebook.com/josedasilvacosta.costa.3/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://github.com/Jose-cyber">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						   <li>
+                            <a href="https://www.instagram.com/junior_zezin/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+					</ul>
+					<p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+   
+
+	<!-- jQuery -->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script src="../js/jqBootstrapValidation.js"></script>
+	<script src="../js/contact_me.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
